@@ -32,7 +32,7 @@ def update_records(issue, issue_number=None):
     if issue_number is None:
         issue_number = os.getenv("ISSUE_NUMBER")
 
-    issue_title = issue["title"]
+    issue_title = issue["title"][1:]
     issue_labels = ["`" + label["name"] + "`" for label in issue["labels"]]
     issue_link = issue["html_url"]
 
@@ -93,7 +93,7 @@ def backup_issue_as_md(issue, issue_number):
         if issue_number is None:
             issue_number = os.getenv("ISSUE_NUMBER")
             
-        issue_title = issue["title"]
+        issue_title = issue["title"][1:]
         issue_body = issue['body']
         issue_labels = ["`" + label['name'] + "`" for label in issue['labels']]
         issue_link = issue['html_url']
