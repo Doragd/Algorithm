@@ -36,7 +36,7 @@ def update_records(issue, issue_number=None):
     issue_labels = ["`" + label["name"] + "`" for label in issue["labels"]]
     issue_link = issue["html_url"]
 
-    with open("DailyLC.md", "r+") as file:
+    with open("DailyLC.md", "r") as file:
         lines = file.readlines()
 
         table_start_index = None
@@ -56,8 +56,9 @@ def update_records(issue, issue_number=None):
         else:
             lines.insert(table_start_index, new_line)
 
-        file.seek(0)
+    with open('DailyLC.md', 'w') as file:
         file.writelines(lines)
+        file.close()
 
     return "Successfully updated Records of DailyLC.md"
 
