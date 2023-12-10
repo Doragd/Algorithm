@@ -45,9 +45,9 @@ def update_records(issue, issue_number=None):
         for i in range(len(lines)):
             if lines[i].strip() == "|#|Title|Tag|Date|":
                 table_start_index = i + 2
-            if lines[i].strip().startswith(f"|{issue_number}|"):
+            if lines[i].strip().startswith(f"|{issue_number}|") and table_start_index:
                 existing_issue_index = i
-            if table_start_index and existing_issue_index:
+            if existing_issue_index:
                 break
 
         new_line = f"|{issue_number}|[{issue_title}]({issue_link})|{' '.join(issue_labels)}|{issue['created_at']}|\n"
