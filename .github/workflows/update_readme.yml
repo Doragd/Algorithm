@@ -1,4 +1,4 @@
-name: update_readme
+name: update_DailyLC
 
 on:
   workflow_dispatch:
@@ -13,7 +13,7 @@ on:
       - main.py
 
 jobs:
-  update-readme:
+  update-DailyLC:
     runs-on: ubuntu-latest
     if: github.repository_owner_id == github.event.issue.user.id || github.event_name == 'push'
     steps:
@@ -30,12 +30,12 @@ jobs:
           python -m pip install --upgrade pip
           pip install requests PyGithub
 
-      - name: Get issue data and update README.md
+      - name: Get issue data and update DailyLC.md
         run: python main.py --issue_number '${{ github.event.issue.number }}'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Push README
+      - name: Push DailyLC
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"

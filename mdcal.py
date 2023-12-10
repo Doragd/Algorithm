@@ -54,14 +54,14 @@ def get_dict(lang='en'):
     return dic
 
 def update_calendar(year, month, day, with_isoweek=False, start_from_Sun=False, lang="en"):
-    # Check if README.md exists, if not, create one
-    if not os.path.exists('README.md'):
-        with open('README.md', 'w') as f:
-            print("The file README.md does not exist. Creating a new one...")
+    # Check if DailyLC.md exists, if not, create one
+    if not os.path.exists('DailyLC.md'):
+        with open('DailyLC.md', 'w') as f:
+            print("The file DailyLC.md does not exist. Creating a new one...")
             f.write('## 🎯 Calendar\n\n## Records\n\n')
 
-    # Read the content of README.md
-    with open('README.md', 'r') as file:
+    # Read the content of DailyLC.md
+    with open('DailyLC.md', 'r') as file:
         content = file.read()
 
     # Extract the part between "## 🎯 Calendar" to the start of the next section "## Records".
@@ -69,7 +69,7 @@ def update_calendar(year, month, day, with_isoweek=False, start_from_Sun=False, 
     
     # If "## 🎯 Calendar" section doesn't exist or there is no calendar data
     if calendar_section_match is None:
-        return "The 'Calendar' section does not exist in README.md or there is no calendar data."
+        return "The 'Calendar' section does not exist in DailyLC.md or there is no calendar data."
 
     calendar_section = calendar_section_match.group(1)
 
@@ -100,13 +100,13 @@ def update_calendar(year, month, day, with_isoweek=False, start_from_Sun=False, 
                     star_flag = False
             calendar_section_lines[i] = "|".join(day_cells)
 
-    # Replace 'Calendar' section in README.md with the updated section
+    # Replace 'Calendar' section in DailyLC.md with the updated section
     new_content = re.sub(r"## 🎯 Calendar(.*)(?=## 🍃 Records)", "\n".join(calendar_section_lines), content, flags=re.DOTALL)
     
-    with open('README.md', 'w') as file:
+    with open('DailyLC.md', 'w') as file:
         file.write(new_content)
 
-    return "Successfully updated Calendar of README.md"
+    return "Successfully updated Calendar of DailyLC.md"
 
 if __name__ == "__main__":
     argv = sys.argv

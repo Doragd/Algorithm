@@ -36,7 +36,7 @@ def update_records(issue, issue_number=None):
     issue_labels = ["`" + label["name"] + "`" for label in issue["labels"]]
     issue_link = issue["html_url"]
 
-    with open("README.md", "r+") as file:
+    with open("DailyLC.md", "r+") as file:
         lines = file.readlines()
 
         table_start_index = None
@@ -59,7 +59,7 @@ def update_records(issue, issue_number=None):
         file.seek(0)
         file.writelines(lines)
 
-    return "Successfully updated Records of README.md"
+    return "Successfully updated Records of DailyLC.md"
 
 def update_star(issue):
     created_at_str = issue['created_at']
