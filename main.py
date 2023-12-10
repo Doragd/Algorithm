@@ -17,6 +17,8 @@ def get_issue(issue_number=None):
         response = requests.get(api_url, headers=headers)
         issue = response.json()
 
+        print(api_url)
+        print(headers)
         print(issue)
 
     except Exception as e:
