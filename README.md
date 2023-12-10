@@ -4,6 +4,7 @@
 ## 🎯 Calendar
 
 
+
 * 2023/12
 
 |Mon|Tue|Wed|Thu|Fri|Sat|Sun|
@@ -20,4 +21,4 @@
 |#|Title|Tag|Date|
 |:-:|:-:|:-:|:-:|
 |3|[100. 相同的树](https://github.com/Doragd/Algorithm/issues/3)|`二叉树` `递归`|2023-12-10T12:14:09Z|
-|2|[110. 平衡二叉树](https://github.com/Doragd/Algorithm/issues/2)|`二叉树` `搜索`|2023-12-10T10:56:53Z|
+|2|[110. 平衡二叉树](https://github.com/Doragd/Algorithm/issues/2)|`二叉树` `递归`|2023-12-10T10:56:53Z|
