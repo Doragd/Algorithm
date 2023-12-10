@@ -24,7 +24,10 @@ def get_issue(issue_number=None):
     return issue
 
 
-def update_records(issue):
+def update_records(issue, issue_number=None):
+    if issue_number is None:
+        issue_number = os.getenv("ISSUE_NUMBER")
+
     issue_title = issue["title"]
     issue_labels = ["`" + label["name"] + "`" for label in issue["labels"]]
     issue_link = issue["html_url"]
@@ -32,11 +35,22 @@ def update_records(issue):
     with open("README.md", "r+") as file:
         lines = file.readlines()
 
+        table_start_index = None
+        existing_issue_index = None
+
         for i in range(len(lines)):
-            if lines[i].strip() == "|Title|Tag|Date|" and lines[i+1].strip() == "|:-:|:-:|:-:|":
-                new_line = f"|[{issue_title}]({issue_link})|{' '.join(issue_labels)}|{issue['created_at']}|\n"
-                lines.insert(i+2, new_line)
+            if lines[i].strip() == "|#|Title|Tag|Date|":
+                table_start_index = i + 2
+            if lines[i].strip().startswith(f"|{issue_number}|"):
+                existing_issue_index = i
+            if table_start_index and existing_issue_index:
                 break
+
+        new_line = f"|{issue_number}|[{issue_title}]({issue_link})|{' '.join(issue_labels)}|{issue['created_at']}|\n"
+        if existing_issue_index is not None:
+            lines[existing_issue_index] = new_line
+        else:
+            lines.insert(table_start_index, new_line)
 
         file.seek(0)
         file.writelines(lines)
@@ -107,7 +121,7 @@ def main(issue_number):
     try:
         issue = get_issue(issue_number)
         if issue is not None:
-            print(update_records(issue))
+            print(update_records(issue, issue_number))
             print(update_star(issue))
             print(backup_issue_as_md(issue, issue_number))
         else:

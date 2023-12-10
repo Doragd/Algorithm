@@ -16,5 +16,5 @@
 
 ## 🍃 Records
 
-|Title|Tag|Date|
-|:-:|:-:|:-:|
+|#|Title|Tag|Date|
+|:-:|:-:|:-:|:-:|
