@@ -125,7 +125,7 @@ def backup_issue_as_md(issue, issue_number):
 def main(issue_number):
     try:
         issue = get_issue(issue_number)
-        if issue is not None:
+        if issue is not None and issue["title"].startswith("R"):
             print(update_records(issue, issue_number))
             print(update_star(issue))
             print(backup_issue_as_md(issue, issue_number))
