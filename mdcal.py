@@ -55,9 +55,9 @@ def get_dict(lang='en'):
 
 def update_calendar(year, month, day, with_isoweek=False, start_from_Sun=False, lang="en"):
     # Check if README.md exists, if not, create one
-    if not os.path.exists('DailyLC.md'):
-        with open('DailyLC.md', 'w') as f:
-            print("The file DailyLC.md does not exist. Creating a new one...")
+    if not os.path.exists('README.md'):
+        with open('README.md', 'w') as f:
+            print("The file README.md does not exist. Creating a new one...")
             f.write('## 🎯 Calendar\n\n## Records\n\n')
 
     # Read the content of README.md
@@ -69,7 +69,7 @@ def update_calendar(year, month, day, with_isoweek=False, start_from_Sun=False, 
     
     # If "## 🎯 Calendar" section doesn't exist or there is no calendar data
     if calendar_section_match is None:
-        return "The 'Calendar' section does not exist in DailyLC.md or there is no calendar data."
+        return "The 'Calendar' section does not exist in README.md or there is no calendar data."
 
     calendar_section = calendar_section_match.group(1)
 
