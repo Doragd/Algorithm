@@ -32,11 +32,11 @@ def update_records(issue, issue_number=None):
     if issue_number is None:
         issue_number = os.getenv("ISSUE_NUMBER")
 
-    issue_title = issue["title"]
+    issue_title = issue["title"][1:]
     issue_labels = ["`" + label["name"] + "`" for label in issue["labels"]]
     issue_link = issue["html_url"]
 
-    with open("README.md", "r+") as file:
+    with open("DailyLC.md", "r") as file:
         lines = file.readlines()
 
         table_start_index = None
@@ -45,9 +45,9 @@ def update_records(issue, issue_number=None):
         for i in range(len(lines)):
             if lines[i].strip() == "|#|Title|Tag|Date|":
                 table_start_index = i + 2
-            if lines[i].strip().startswith(f"|{issue_number}|"):
+            if lines[i].strip().startswith(f"|{issue_number}|") and table_start_index:
                 existing_issue_index = i
-            if table_start_index and existing_issue_index:
+            if existing_issue_index:
                 break
 
         new_line = f"|{issue_number}|[{issue_title}]({issue_link})|{' '.join(issue_labels)}|{issue['created_at']}|\n"
@@ -56,10 +56,11 @@ def update_records(issue, issue_number=None):
         else:
             lines.insert(table_start_index, new_line)
 
-        file.seek(0)
+    with open('DailyLC.md', 'w') as file:
         file.writelines(lines)
+        file.close()
 
-    return "Successfully updated Records of README.md"
+    return "Successfully updated Records of DailyLC.md"
 
 def update_star(issue):
     created_at_str = issue['created_at']
@@ -92,7 +93,7 @@ def backup_issue_as_md(issue, issue_number):
         if issue_number is None:
             issue_number = os.getenv("ISSUE_NUMBER")
             
-        issue_title = issue["title"]
+        issue_title = issue["title"][1:]
         issue_body = issue['body']
         issue_labels = ["`" + label['name'] + "`" for label in issue['labels']]
         issue_link = issue['html_url']
@@ -124,7 +125,7 @@ def backup_issue_as_md(issue, issue_number):
 def main(issue_number):
     try:
         issue = get_issue(issue_number)
-        if issue is not None:
+        if issue is not None and issue["title"].startswith("R"):
             print(update_records(issue, issue_number))
             print(update_star(issue))
             print(backup_issue_as_md(issue, issue_number))
