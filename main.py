@@ -32,11 +32,11 @@ def update_records(issue, issue_number=None):
     if issue_number is None:
         issue_number = os.getenv("ISSUE_NUMBER")
 
-    issue_title = issue["title"][1:]
+    issue_title = issue["title"]
     issue_labels = ["`" + label["name"] + "`" for label in issue["labels"]]
     issue_link = issue["html_url"]
 
-    with open("DailyLC.md", "r") as file:
+    with open("DailyLC.md", "r+") as file:
         lines = file.readlines()
 
         table_start_index = None
@@ -56,9 +56,8 @@ def update_records(issue, issue_number=None):
         else:
             lines.insert(table_start_index, new_line)
 
-    with open('DailyLC.md', 'w') as file:
+        file.seek(0)
         file.writelines(lines)
-        file.close()
 
     return "Successfully updated Records of DailyLC.md"
 
@@ -93,7 +92,7 @@ def backup_issue_as_md(issue, issue_number):
         if issue_number is None:
             issue_number = os.getenv("ISSUE_NUMBER")
             
-        issue_title = issue["title"][1:]
+        issue_title = issue["title"]
         issue_body = issue['body']
         issue_labels = ["`" + label['name'] + "`" for label in issue['labels']]
         issue_link = issue['html_url']
@@ -125,7 +124,7 @@ def backup_issue_as_md(issue, issue_number):
 def main(issue_number):
     try:
         issue = get_issue(issue_number)
-        if issue is not None and issue["title"].startswith("R"):
+        if issue is not None:
             print(update_records(issue, issue_number))
             print(update_star(issue))
             print(backup_issue_as_md(issue, issue_number))
