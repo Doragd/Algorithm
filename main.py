@@ -36,7 +36,7 @@ def update_records(issue, issue_number=None):
     issue_labels = ["`" + label["name"] + "`" for label in issue["labels"]]
     issue_link = issue["html_url"]
 
-    with open("README.md", "r+") as file:
+    with open("README.md", "r") as file:
         lines = file.readlines()
 
         table_start_index = None
@@ -55,8 +55,7 @@ def update_records(issue, issue_number=None):
             lines[existing_issue_index] = new_line
         else:
             lines.insert(table_start_index, new_line)
-
-        file.seek(0)
+     with open("README.md", "w") as file:
         file.writelines(lines)
 
     return "Successfully updated Records of README.md"
