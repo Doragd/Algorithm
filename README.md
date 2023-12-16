@@ -1,6 +1,9 @@
 # 📝 Algorithm
 算法题练习记录博客，基于GitHub Action和GitHub Issue功能记录
 
+刷题进度：[![LeetCode](https://img.shields.io/github/issues/doragd/algorithm?style=flat&label=%F0%9F%8C%B8%20LeetCode%20Record&labelColor=%20%236DB9EF&color=%23FF90BC&link=https%3A%2F%2Fgithub.com%2Fdoragd%2Falgorithm
+)](https://github.com/doragd/algorithm)
+
 ## 🎄 How to Use
 
 ❗ 请注意，不要在本项目下提交刷题记录，正确方法如下：
