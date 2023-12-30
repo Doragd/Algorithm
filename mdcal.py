@@ -85,13 +85,13 @@ def update_calendar(year, month, day, with_isoweek=False, start_from_Sun=False, 
         calendar_section_lines.append('\n') 
     else:
         # Append the existing calendar for the current month/year
-        calendar_section_lines += calendar_section.split("\n")[1:]
+        calendar_section_lines += calendar_section.split("\n")[2:]
     
     star_flag = True
-    for i in range(1, len(calendar_section_lines)):
+    for i in range(len(calendar_section_lines) - 1, 3, -1):
         if re.match("^\\|([ ]*.*[ ]*\|)+$", calendar_section_lines[i]):
             day_cells = calendar_section_lines[i].split("|")
-            for j in range(1, len(day_cells) - 1):
+            for j in range(len(day_cells) - 2, 0, -1):
                 digit = re.findall(r'\d+', day_cells[j].strip())
                 if len(digit) == 0:
                     continue
