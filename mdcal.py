@@ -88,6 +88,7 @@ def update_calendar(year, month, day, with_isoweek=False, start_from_Sun=False, 
         calendar_section_lines += calendar_section.split("\n")[2:]
     
     star_flag = True
+    # Indicate whether we have entered the part of the calendar that really belongs to the current month
     month_start_flag = False
     for i in range(4, len(calendar_section_lines)):
         if re.match("^\\|([ ]*.*[ ]*\|)+$", calendar_section_lines[i]):
@@ -97,11 +98,17 @@ def update_calendar(year, month, day, with_isoweek=False, start_from_Sun=False, 
                 if len(digit) == 0:
                     continue
                 if digit[0] == "1":
-                    month_start_flag = True   
-                if digit[0] == str(day) and "🌟" not in day_cells[j] and star_flag and month_start_flag:
-                    day_cells[j] = day_cells[j].strip() + "🌟"
+                    month_start_flag = True
+                # Current day_cell has the same day and month as our target date. It's where we want to mark a star      
+                if digit[0] == str(day) and month_start_flag:
+                    if "🌟" not in day_cells[j]:
+                        day_cells[j] = day_cells[j].strip() + "🌟"
+                    # Change flag to show that star has been marked - either by appending a star to the original text or doing nothing since there is already a star   
                     star_flag = False
+                    break    
             calendar_section_lines[i] = "|".join(day_cells)
+        if not star_flag:
+            break
 
     # Replace 'Calendar' section in README.md with the updated section
     new_content = re.sub(r"## 🎯 Calendar(.*)(?=## 🍃 Records)", "\n".join(calendar_section_lines), content, flags=re.DOTALL)
